@@ -1,0 +1,37 @@
+1. create database 
+	create database new database;
+	
+2. create Agent_Master TABLE
+	CREATE TABLE Agent_Master
+	(Agent_No INT AUTO_INCREMENT PRIMARY KEY,
+	Agent_Name VARCHAR(25) NOT NULL);
+	
+3. create Scheme_Master TABLE
+	CREATE TABLE Scheme_Master
+	(Scheme_No INT AUTO_INCREMENT PRIMARY KEY,
+	Scheme_Name VARCHAR(25) NOT NULL,
+	Commission DECIMAL(15,2));
+	
+4. create policy_details TABLE
+	CREATE TABLE Policy_Details
+	(Policy_No INT AUTO_INCREMENT PRIMARY KEY,
+	Date1 DATE NOT NULL,
+	Scheme_No INT NOT NULL,
+	Agent_No INT NOT NULL, 
+	CustomerName VARCHAR(25) NOT NULL,
+	PolicyAmount INT NOT NULL,
+	Commission DECIMAL(15,2));
+
+5. Reports TABLE
+	(i)
+	SELECT agent_master.Agent_Name AS Agent, Policy_Details.Scheme_Name as Scheme,COUNT(Policy_No) AS Number_Of_Policies
+from agent_master
+RIGHT JOIN policy_details ON (agent_master.Agent_No=Policy_details.Agent_No)
+GROUP BY Agent_Name;
+
+	(ii)
+	SELECT agent_master.Agent_Name AS Agent_Name, SUM(commission) as Commission
+from agent_master
+INNER JOIN policy_details ON agent_master.Agent_No=policy_details.Agent_No
+GROUP BY Agent_Name;
+	
